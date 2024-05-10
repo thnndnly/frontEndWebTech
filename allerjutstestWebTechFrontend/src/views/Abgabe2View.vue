@@ -1,7 +1,10 @@
 <template>
-  <div class="about">
-    <h1>This is your mom yeah.</h1>
-  </div>
+  <main>
+    <div class="about">
+      <h1>This is your mom yeah.</h1>
+    </div>
+    <PokerGameTable/>
+  </main>
 </template>
 
 <style>
@@ -14,4 +17,5 @@
 }
 </style>
 <script setup lang="ts">
+import TheWelcome from "@/components/TheWelcome.vue";
 </script>
