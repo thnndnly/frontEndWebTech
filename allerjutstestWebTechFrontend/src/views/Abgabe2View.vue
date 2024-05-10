@@ -1,9 +1,12 @@
+<script setup lang="ts">
+import PokerGameTable from "../components/PokerGameTable.vue";
+</script>
+
 <template>
   <main>
-    <div class="about">
-      <h1>This is your mom yeah.</h1>
+    <div class="table">
+      <PokerGameTable />
     </div>
-    <PokerGameTable/>
   </main>
 </template>
 
@@ -16,6 +19,3 @@
   }
 }
 </style>
-<script setup lang="ts">
-import TheWelcome from "@/components/TheWelcome.vue";
-</script>

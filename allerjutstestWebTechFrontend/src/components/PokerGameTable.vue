@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineComponent } from 'vue';
 
 // Definieren des Types für die Pokereinträge
 interface PokerEntry {
@@ -11,24 +10,20 @@ interface PokerEntry {
   cashout: number;
 };
 
-const PokerTracker = defineComponent({
-  data() {
-    return {
-      entries: [
-        { date: '2024-05-10', type: 'Holdem', sb: 1, bb: 2, buyin: 200, cashout: 350 },
-        { date: '2024-05-11', type: 'Omaha', sb: 2, bb: 4, buyin: 300, cashout: 450 },
-        // Weitere Einträge können hier eingefügt werden
-      ] as PokerEntry[]
-    };
-  }
-});
+// Array mit Beispieldaten
+let pokerEntryData: PokerEntry[] = [
+  { date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
+  { date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
+  { date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
+  { date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
+  { date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 350 },
+]
 
-export { PokerTracker };
 </script>
 
 <template>
   <div>
-    <h1>Poker Spiel Verlauf</h1>
+    <h1 class="green">Poker Spiel Verlauf</h1>
     <table>
       <thead>
       <tr>
@@ -41,7 +36,7 @@ export { PokerTracker };
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(entry, index) in entries" :key="index">
+      <tr v-for="(entry, index) in pokerEntryData" :key="index">
         <td>{{ entry.date }}</td>
         <td>{{ entry.type }}</td>
         <td>{{ entry.sb }}</td>
@@ -55,5 +50,9 @@ export { PokerTracker };
 </template>
 
 <style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
 </style>
