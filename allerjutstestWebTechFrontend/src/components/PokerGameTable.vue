@@ -2,16 +2,19 @@
 
 import {ref} from "vue";
 
+let entryID = 0;
+
 let pokerEntryData: pokerGameEntry[] = [
-  { date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
-  { date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
-  { date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
-  { date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
-  { date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
+  { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
+  { id: entryID++, date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
+  { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
+  { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
+  { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
 
 ]
 
 const newEntry = ref<pokerGameEntry>({
+  id: entryID++,
   date: '',
   type: '',
   sb: 0,
@@ -27,6 +30,7 @@ function addPokerEntry(entry: pokerGameEntry) {
 function addNewEntry() {
   addPokerEntry(newEntry.value);
   newEntry.value = {
+    id: 0,
     date: '',
     type: '',
     sb: 0,
@@ -34,6 +38,10 @@ function addNewEntry() {
     buyin: 0,
     cashout: 0
   };
+}
+
+function deleteEntry(entry: pokerGameEntry) {
+  pokerEntryData = pokerEntryData.filter(e => e.id !== entry.id);
 }
 
 const columnWidths = {
@@ -72,6 +80,7 @@ const columnWidths = {
         <td>{{ entry.cashout }}</td>
         <td v-if="(entry.cashout - entry.buyin) < 0" class="valueNegative">{{ entry.cashout - entry.buyin}}</td>
         <td v-else class="valuePositive">{{ entry.cashout - entry.buyin}}</td>
+        <td><button @click="deleteEntry(entry)">X</button></td>
       </tr>
       <tr>
         <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }"></td>
