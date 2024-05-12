@@ -1,32 +1,54 @@
 <script setup lang="ts">
 
-// Definieren des Types für die Pokereinträge
-interface PokerEntry {
-  date: string;
-  type: string;
-  sb: number;
-  bb: number;
-  buyin: number;
-  cashout: number;
-};
+import {ref} from "vue";
 
-// Array mit Beispieldaten
-let pokerEntryData: PokerEntry[] = [
+let pokerEntryData: pokerGameEntry[] = [
   { date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
   { date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
   { date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
   { date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
   { date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
+
 ]
 
-function colorByValue(value: number) {
+const newEntry = ref<pokerGameEntry>({
+  date: '',
+  type: '',
+  sb: 0,
+  bb: 0,
+  buyin: 0,
+  cashout: 0
+});
 
+function addPokerEntry(entry: pokerGameEntry) {
+  pokerEntryData.push(entry)
 }
+
+function addNewEntry() {
+  addPokerEntry(newEntry.value);
+  newEntry.value = {
+    date: '',
+    type: '',
+    sb: 0,
+    bb: 0,
+    buyin: 0,
+    cashout: 0
+  };
+}
+
+const columnWidths = {
+  date: '100px', // Beispielbreite für Datumsspalte
+  type: '80px', // Beispielbreite für Spalte Spieltyp
+  sb: '100px', // Beispielbreite für Spalte Small Blind
+  bb: '100px', // Beispielbreite für Spalte Big Blind
+  buyin: '80px', // Beispielbreite für Spalte Buy-In
+  cashout: '80px' // Beispielbreite für Spalte Cash-Out
+};
 
 </script>
 
 <template>
-  <div>
+  <div id="pokerTabel">
     <h1>poker history</h1>
     <table class="pokerTable">
       <thead>
@@ -51,8 +73,20 @@ function colorByValue(value: number) {
         <td v-if="(entry.cashout - entry.buyin) < 0" class="valueNegative">{{ entry.cashout - entry.buyin}}</td>
         <td v-else class="valuePositive">{{ entry.cashout - entry.buyin}}</td>
       </tr>
+      <tr>
+        <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }"></td>
+        <td><input type="text" id="type" v-model="newEntry.type" :style="{ width: columnWidths.type }"></td>
+        <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }"></td>
+        <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }"></td>
+        <td><input type="text" id="buyin" v-model="newEntry.buyin" :style="{ width: columnWidths.buyin }"></td>
+        <td><input type="text" id="cashout" v-model="newEntry.cashout" :style="{ width: columnWidths.cashout }"></td>
+        <td><button @click="addNewEntry()">addEntry</button></td>
+      </tr>
       </tbody>
     </table>
+  </div>
+  <div id="pokerEntryAdd">
+
   </div>
 </template>
 
@@ -98,6 +132,5 @@ h1 {
   text-align: left;
   color: hsla(160, 100%, 37%, 1);
 }
-
 
 </style>
