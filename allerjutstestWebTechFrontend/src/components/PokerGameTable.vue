@@ -40,8 +40,8 @@ function addNewEntry() {
   };
 }
 
-function deleteEntry(entry: pokerGameEntry) {
-  pokerEntryData = pokerEntryData.filter(e => e.id !== entry.id);
+function deleteEntry(entryToDelete: pokerGameEntry) {
+  pokerEntryData = pokerEntryData.filter(e => e.id !== entryToDelete.id);
 }
 
 const columnWidths = {
@@ -71,16 +71,20 @@ const columnWidths = {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(entry, index) in pokerEntryData" :key="index">
-        <td>{{ entry.date }}</td>
-        <td>{{ entry.type }}</td>
-        <td>{{ entry.sb }}</td>
-        <td>{{ entry.bb }}</td>
-        <td>{{ entry.buyin }}</td>
-        <td>{{ entry.cashout }}</td>
-        <td v-if="(entry.cashout - entry.buyin) < 0" class="valueNegative">{{ entry.cashout - entry.buyin}}</td>
-        <td v-else class="valuePositive">{{ entry.cashout - entry.buyin}}</td>
-        <td><button @click="deleteEntry(entry)">X</button></td>
+      <tr v-for="pokerGameEntry in pokerEntryData" :key="pokerGameEntry.id">
+        <td>{{ pokerGameEntry.date }}</td>
+        <td>{{ pokerGameEntry.type }}</td>
+        <td>{{ pokerGameEntry.sb }}</td>
+        <td>{{ pokerGameEntry.bb }}</td>
+        <td>{{ pokerGameEntry.buyin }}</td>
+        <td>{{ pokerGameEntry.cashout }}</td>
+        <td v-if="(pokerGameEntry.cashout - pokerGameEntry.buyin) < 0" class="valueNegative">{{ pokerGameEntry.cashout - pokerGameEntry.buyin}}</td>
+        <td v-else class="valuePositive">{{ pokerGameEntry.cashout - pokerGameEntry.buyin }}</td>
+        <td>
+          <button @click="deleteEntry(pokerGameEntry)" class="deleteButton">
+            <img alt="Delete Row Icon" class="logo" src="@/assets/IconDeleteWhite.png"/>
+          </button>
+        </td>
       </tr>
       <tr>
         <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }"></td>
@@ -89,23 +93,56 @@ const columnWidths = {
         <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }"></td>
         <td><input type="text" id="buyin" v-model="newEntry.buyin" :style="{ width: columnWidths.buyin }"></td>
         <td><input type="text" id="cashout" v-model="newEntry.cashout" :style="{ width: columnWidths.cashout }"></td>
-        <td><button @click="addNewEntry()">addEntry</button></td>
+        <td><button @click="addNewEntry()" id="addEntryButton">addEntry</button></td>
       </tr>
       </tbody>
     </table>
-  </div>
-  <div id="pokerEntryAdd">
-
   </div>
 </template>
 
 <style scoped>
 
+.logo {
+  width: 25px;
+  height: 25px;
+  background: tomato;
+  border-radius: 15%;
+}
+
+.deleteButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+input[type=text] {
+  border: 2px solid #185875;
+  border-radius: 2px;
+  background-color: #181818;
+  outline: none;
+  color: rgba(235, 235, 235, 0.64);
+}
+
+button {
+  border: 0 solid;
+  border-radius: 4px;
+  background-color: #181818;
+  color: red;
+}
+
+#addEntryButton {
+  border: 2px solid #185875;
+  border-radius: 4px;
+  background-color: #185875;
+  outline: none;
+  color: rgba(235, 235, 235, 0.64);
+}
+
 .valuePositive {
-  color: green;
+  color: mediumseagreen;
 }
 .valueNegative {
-  color: red;
+  color: tomato;
 }
 
 table {
@@ -118,12 +155,6 @@ table {
   font-size: 1em;
   text-align: left;
   color: #185875;
-}
-
-.pokerTable td {
-  font-weight: normal;
-  font-size: 1em;
-
 }
 
 .pokerTable {
