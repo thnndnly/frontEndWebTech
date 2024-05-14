@@ -1,19 +1,20 @@
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
+import {reactive, type UnwrapNestedRefs} from "vue";
 
 let entryID = 0;
 
-let pokerEntryData: pokerGameEntry[] = [
-  { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
-  { id: entryID++, date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
-  { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
-  { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
-  { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
+let pokerGameData = reactive({
+  pokerEntryData: [
+    { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
+    { id: entryID++, date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
+    { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
+    { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
+    { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
+  ]
+});
 
-]
-
-const newEntry = ref<pokerGameEntry>({
+const newEntry = reactive({
   id: entryID++,
   date: '',
   type: '',
@@ -23,35 +24,49 @@ const newEntry = ref<pokerGameEntry>({
   cashout: 0
 });
 
-function addPokerEntry(entry: pokerGameEntry) {
-  pokerEntryData.push(entry)
-}
-
-function deleteEntry(entryToDelete: pokerGameEntry) {
-  pokerEntryData = pokerEntryData.filter((e) => e.id !== entryToDelete.id);
-}
-
-function addNewEntry() {
-  addPokerEntry(newEntry.value);
-  newEntry.value = {
-    id: 0,
-    date: '',
-    type: '',
-    sb: 0,
-    bb: 0,
-    buyin: 0,
-    cashout: 0
-  };
-}
-
 const columnWidths = {
-  date: '100px', // Beispielbreite für Datumsspalte
-  type: '80px', // Beispielbreite für Spalte Spieltyp
-  sb: '100px', // Beispielbreite für Spalte Small Blind
-  bb: '100px', // Beispielbreite für Spalte Big Blind
-  buyin: '80px', // Beispielbreite für Spalte Buy-In
-  cashout: '80px' // Beispielbreite für Spalte Cash-Out
+  date: '100px',
+  type: '80px',
+  sb: '100px',
+  bb: '100px',
+  buyin: '80px',
+  cashout: '80px'
 };
+
+function addPokerEntry(entry: UnwrapNestedRefs<{
+  date: string;
+  bb: number;
+  buyin: number;
+  id: number;
+  type: string;
+  sb: number;
+  cashout: number
+}>) {
+  pokerGameData.pokerEntryData.push(entry)
+}
+
+function addNewEntry(){
+  addPokerEntry(newEntry);
+  newEntry.date = '';
+  newEntry.type = '';
+  newEntry.sb = 0;
+  newEntry.bb = 0;
+  newEntry.buyin = 0;
+  newEntry.cashout = 0;
+}
+
+function deleteEntry(entryToDelete: UnwrapNestedRefs<{
+  date: string;
+  bb: number;
+  buyin: number;
+  id: number;
+  type: string;
+  sb: number;
+  cashout: number
+}>) {
+  pokerGameData.pokerEntryData = pokerGameData.pokerEntryData.filter((e) => e.id !== entryToDelete.id);
+}
+
 
 </script>
 
@@ -71,7 +86,7 @@ const columnWidths = {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="entry in pokerEntryData" :key="entry.id">
+      <tr v-for="entry in pokerGameData.pokerEntryData" :key="entry.id">
         <td>{{ entry.date }}</td>
         <td>{{ entry.type }}</td>
         <td>{{ entry.sb }}</td>
