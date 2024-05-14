@@ -170,7 +170,8 @@ h1 {
   font-weight: bold;
   font-size: 2em;
   text-align: left;
-  color: hsla(160, 100%, 37%, 1);
+  color: #FFC20E; /* Gelb in Hex */
+
 }
 
 </style>
