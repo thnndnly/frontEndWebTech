@@ -1,9 +1,20 @@
 <script setup lang="ts">
 
-import {computed, reactive, ref} from "vue";
+import {computed, reactive, ref, type UnwrapNestedRefs} from "vue";
 
 let entryID = 0;
 
+const newEntry = {
+  id: 0,
+  date: '',
+  type: '',
+  sb: 0,
+  bb: 0,
+  buyin: 0,
+  cashout: 0
+};
+
+entryID++;
 let pokerEntryData = reactive({
   pokerGameEntry: [
     { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
@@ -14,26 +25,25 @@ let pokerEntryData = reactive({
   ]
 })
 
-const newEntry = reactive({
-  id: entryID++,
-  date: '',
-  type: '',
-  sb: 0,
-  bb: 0,
-  buyin: 0,
-  cashout: 0
-});
-
-function addPokerEntry(entry: pokerGameEntry) {
-  pokerEntryData.pokerGameEntry.push(entry)
+function addPokerEntry() {
+  pokerEntryData.pokerGameEntry.push({ id: newEntry.id, date: newEntry.date, type: newEntry.type, sb: newEntry.sb, bb: newEntry.bb, buyin: newEntry.buyin, cashout: newEntry.cashout})
 }
 
-function deleteEntry(entryToDelete: pokerGameEntry) {
+function deleteEntry(entryToDelete: UnwrapNestedRefs<{
+  date: string;
+  bb: number;
+  buyin: number;
+  id: number;
+  type: string;
+  sb: number;
+  cashout: number
+}>) {
   pokerEntryData.pokerGameEntry = pokerEntryData.pokerGameEntry.filter((e) => e.id !== entryToDelete.id);
 }
 
 function addNewEntry() {
-  addPokerEntry(newEntry);
+  addPokerEntry();
+  newEntry.id = entryID++;
   newEntry.date = '';
   newEntry.type = '';
   newEntry.sb = 0;

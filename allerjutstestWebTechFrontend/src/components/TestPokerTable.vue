@@ -14,15 +14,14 @@ let pokerGameData = reactive({
   ]
 });
 
-const newEntry = reactive({
-  id: entryID++,
+const newEntry = {
   date: '',
   type: '',
   sb: 0,
   bb: 0,
   buyin: 0,
   cashout: 0
-});
+};
 
 const columnWidths = {
   date: '100px',
@@ -33,20 +32,12 @@ const columnWidths = {
   cashout: '80px'
 };
 
-function addPokerEntry(entry: UnwrapNestedRefs<{
-  date: string;
-  bb: number;
-  buyin: number;
-  id: number;
-  type: string;
-  sb: number;
-  cashout: number
-}>) {
-  pokerGameData.pokerEntryData.push(entry)
+function addPokerEntry() {
+  pokerGameData.pokerEntryData.push({ id: entryID++, date: newEntry.date, type: newEntry.type, sb: newEntry.sb, bb: newEntry.bb, buyin: newEntry.buyin, cashout: newEntry.cashout})
 }
 
 function addNewEntry(){
-  addPokerEntry(newEntry);
+  addPokerEntry();
   newEntry.date = '';
   newEntry.type = '';
   newEntry.sb = 0;
@@ -56,10 +47,10 @@ function addNewEntry(){
 }
 
 function deleteEntry(entryToDelete: UnwrapNestedRefs<{
+  id: number;
   date: string;
   bb: number;
   buyin: number;
-  id: number;
   type: string;
   sb: number;
   cashout: number
