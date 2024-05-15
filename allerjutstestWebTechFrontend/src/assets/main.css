@@ -15,6 +15,13 @@ a,
   padding: 3px;
 }
 
+.agua {
+  text-decoration: none;
+  color: #00D4FF; /* Aqua in Hex */
+  transition: 0.4s;
+  padding: 3px;
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);

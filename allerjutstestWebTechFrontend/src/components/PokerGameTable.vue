@@ -1,18 +1,20 @@
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
+import {computed, reactive, ref} from "vue";
 
 let entryID = 0;
 
-let pokerEntryData: pokerGameEntry[] = [
-  { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
-  { id: entryID++, date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
-  { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
-  { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
-  { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
-]
+let pokerEntryData = reactive({
+  pokerGameEntry: [
+    { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
+    { id: entryID++, date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
+    { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
+    { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
+    { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
+  ]
+})
 
-const newEntry = ref<pokerGameEntry>({
+const newEntry = reactive({
   id: entryID++,
   date: '',
   type: '',
@@ -23,24 +25,21 @@ const newEntry = ref<pokerGameEntry>({
 });
 
 function addPokerEntry(entry: pokerGameEntry) {
-  pokerEntryData.push(entry)
+  pokerEntryData.pokerGameEntry.push(entry)
 }
 
 function deleteEntry(entryToDelete: pokerGameEntry) {
-  pokerEntryData = pokerEntryData.filter((e) => e.id !== entryToDelete.id);
+  pokerEntryData.pokerGameEntry = pokerEntryData.pokerGameEntry.filter((e) => e.id !== entryToDelete.id);
 }
 
 function addNewEntry() {
-  addPokerEntry(newEntry.value);
-  newEntry.value = {
-    id: 0,
-    date: '',
-    type: '',
-    sb: 0,
-    bb: 0,
-    buyin: 0,
-    cashout: 0
-  };
+  addPokerEntry(newEntry);
+  newEntry.date = '';
+  newEntry.type = '';
+  newEntry.sb = 0;
+  newEntry.bb = 0;
+  newEntry.buyin = 0;
+  newEntry.cashout = 0;
 }
 
 const columnWidths = {
@@ -59,7 +58,7 @@ const columnWidths = {
     <h1>poker history</h1>
     <table class="pokerTable">
       <thead>
-      <tr>
+      <tr class="agua">
         <th>Datum</th>
         <th>Spieltyp</th>
         <th>Small Blind</th>
@@ -70,7 +69,7 @@ const columnWidths = {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="entry in pokerEntryData" :key="entry.id">
+      <tr v-for="entry in pokerEntryData.pokerGameEntry" :key="entry.id">
         <td>{{ entry.date }}</td>
         <td>{{ entry.type }}</td>
         <td>{{ entry.sb }}</td>
@@ -153,7 +152,6 @@ table {
   font-weight: bold;
   font-size: 1em;
   text-align: left;
-  color: #00D4FF;
 }
 
 .pokerTable {
