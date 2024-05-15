@@ -55,7 +55,7 @@ const columnWidths = {
 
 <template>
   <div id="pokerTabel">
-    <h1>poker history</h1>
+    <h1>Poker History</h1>
     <table class="pokerTable">
       <thead>
       <tr class="agua">
@@ -114,7 +114,7 @@ const columnWidths = {
 }
 
 input[type=text] {
-  border: 2px solid #185875;
+  border: 2px solid #FFC20E;;
   border-radius: 2px;
   background-color: #181818;
   outline: none;
@@ -129,9 +129,9 @@ button {
 }
 
 #addEntryButton {
-  border: 2px solid #00D4FF;
+  border: 2px solid #FFC20E;;
   border-radius: 4px;
-  background-color: #00D4FF;
+  background-color: #FFC20E;;
   outline: none;
   color: black;
 }
