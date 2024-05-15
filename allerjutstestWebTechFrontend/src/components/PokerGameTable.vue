@@ -10,7 +10,6 @@ let pokerEntryData: pokerGameEntry[] = [
   { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
   { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
   { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
-
 ]
 
 const newEntry = ref<pokerGameEntry>({
@@ -87,8 +86,8 @@ const columnWidths = {
         </td>
       </tr>
       <tr>
-        <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }"></td>
-        <td><input type="text" id="type" v-model="newEntry.type" :style="{ width: columnWidths.type }"></td>
+        <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }" placeholder="Datum"></td>
+        <td><input type="text" id="type" v-model="newEntry.type" :style="{ width: columnWidths.type }" placeholder="Spieltyp"></td>
         <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }"></td>
         <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }"></td>
         <td><input type="text" id="buyin" v-model="newEntry.buyin" :style="{ width: columnWidths.buyin }"></td>
@@ -131,11 +130,11 @@ button {
 }
 
 #addEntryButton {
-  border: 2px solid #185875;
+  border: 2px solid #00D4FF;
   border-radius: 4px;
-  background-color: #185875;
+  background-color: #00D4FF;
   outline: none;
-  color: rgba(235, 235, 235, 0.64);
+  color: black;
 }
 
 .valuePositive {
@@ -154,7 +153,7 @@ table {
   font-weight: bold;
   font-size: 1em;
   text-align: left;
-  color: #185875;
+  color: #00D4FF;
 }
 
 .pokerTable {
