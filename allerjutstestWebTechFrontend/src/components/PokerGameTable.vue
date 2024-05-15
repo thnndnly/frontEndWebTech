@@ -1,9 +1,20 @@
 <script setup lang="ts">
 
-import {computed, reactive, ref} from "vue";
+import {computed, reactive, ref, type UnwrapNestedRefs} from "vue";
 
 let entryID = 0;
 
+const newEntry = {
+  id: 0,
+  date: '',
+  type: '',
+  sb: 0,
+  bb: 0,
+  buyin: 0,
+  cashout: 0
+};
+
+entryID++;
 let pokerEntryData = reactive({
   pokerGameEntry: [
     { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
@@ -14,26 +25,25 @@ let pokerEntryData = reactive({
   ]
 })
 
-const newEntry = reactive({
-  id: entryID++,
-  date: '',
-  type: '',
-  sb: 0,
-  bb: 0,
-  buyin: 0,
-  cashout: 0
-});
-
-function addPokerEntry(entry: pokerGameEntry) {
-  pokerEntryData.pokerGameEntry.push(entry)
+function addPokerEntry() {
+  pokerEntryData.pokerGameEntry.push({ id: newEntry.id, date: newEntry.date, type: newEntry.type, sb: newEntry.sb, bb: newEntry.bb, buyin: newEntry.buyin, cashout: newEntry.cashout})
 }
 
-function deleteEntry(entryToDelete: pokerGameEntry) {
+function deleteEntry(entryToDelete: UnwrapNestedRefs<{
+  date: string;
+  bb: number;
+  buyin: number;
+  id: number;
+  type: string;
+  sb: number;
+  cashout: number
+}>) {
   pokerEntryData.pokerGameEntry = pokerEntryData.pokerGameEntry.filter((e) => e.id !== entryToDelete.id);
 }
 
 function addNewEntry() {
-  addPokerEntry(newEntry);
+  addPokerEntry();
+  newEntry.id = entryID++;
   newEntry.date = '';
   newEntry.type = '';
   newEntry.sb = 0;
@@ -55,7 +65,7 @@ const columnWidths = {
 
 <template>
   <div id="pokerTabel">
-    <h1>Poker History</h1>
+    <h1 id="tableHeader">poker history</h1>
     <table class="pokerTable">
       <thead>
       <tr class="agua">
@@ -114,7 +124,7 @@ const columnWidths = {
 }
 
 input[type=text] {
-  border: 2px solid #FFC20E;;
+  border: 2px solid #007bff;;
   border-radius: 2px;
   background-color: #181818;
   outline: none;
@@ -129,9 +139,9 @@ button {
 }
 
 #addEntryButton {
-  border: 2px solid #FFC20E;;
+  border: 2px solid #007bff;;
   border-radius: 4px;
-  background-color: #FFC20E;;
+  background-color: #007bff;;
   outline: none;
   color: black;
 }
@@ -167,7 +177,7 @@ h1 {
   font-weight: bold;
   font-size: 2em;
   text-align: left;
-  color: #FFC20E; /* Gelb in Hex */
+  color: #c40000; /* Gelb in Hex */
 
 }
 
