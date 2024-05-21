@@ -13,6 +13,10 @@ body {
   background-image: linear-gradient(to top, #000000, #100003, #1a0005, #220105, #280104, #2d0204, #320203, #380101, #3e0102, #450002, #4c0001, #520000);
 }
 
+header {
+
+}
+
 a,
 .yellow {
   text-decoration: none;
@@ -42,7 +46,6 @@ a,
 
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
 }
