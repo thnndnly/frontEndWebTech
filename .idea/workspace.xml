@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be55a863-9e1d-4357-9285-f330cae8b6df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/TestComponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Abgabe3View.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Abgabe3View.vue" afterDir="false" />
-    </list>
+    <list default="true" id="be55a863-9e1d-4357-9285-f330cae8b6df" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -132,7 +126,7 @@
       <workItem from="1716893025433" duration="617000" />
       <workItem from="1716894411871" duration="381000" />
       <workItem from="1716897396291" duration="1176000" />
-      <workItem from="1716898688021" duration="1459000" />
+      <workItem from="1716898688021" duration="1633000" />
     </task>
     <servers />
   </component>

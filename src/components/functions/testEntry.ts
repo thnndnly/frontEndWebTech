@@ -3,7 +3,3 @@ interface testEntry {
     name: string;
     description: string;
 }
-
-function getTestEntries(): Promise<testEntry[]> {
-    
-}
