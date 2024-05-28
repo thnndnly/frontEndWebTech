@@ -1,4 +1,4 @@
-type gameEntry = {
+interface gameEntry {
     date: string;
     bb: number;
     buyin: number;
