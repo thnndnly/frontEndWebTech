@@ -26,7 +26,7 @@ const router = createRouter({
     {
       path: '/testview',
       name: 'testview',
-      component: () => import('../views/TestPokerTableView.vue')
+      component: () => import('../views/Abgabe3View.vue')
     }
   ]
 })

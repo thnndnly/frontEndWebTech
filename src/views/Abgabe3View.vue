@@ -1,20 +1,10 @@
 <script setup lang="ts">
-import {onMounted, reactive} from "vue";
 
-  function getTestEntries() {
-
-  }
-
-  let testEntries = reactive({
-
-  })
-
-
-
+import TestComponent from "@/components/TestComponent.vue";
 </script>
 
 <template>
-
+  <TestComponent />
 </template>
 
 <style scoped>
