@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import PokerGameTable from "../components/PokerGameTable.vue";
+import PokerGameTable from "../components/icons/TabelleSeite/PokerGameTable.vue";
+/*
+import NavBar from "../components/icons/NavigationsLeiste/NavBar.vue";
+
+ */
 </script>
 
 <template>
   <main>
+    <NavBar />
     <div class="table">
       <PokerGameTable />
     </div>
@@ -19,3 +24,4 @@ import PokerGameTable from "../components/PokerGameTable.vue";
   }
 }
 </style>
+

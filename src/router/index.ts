@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LandingPage from '../views/LandingPage.vue'
 import Abgabe2View from "@/views/Tabelle.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+
     {
-      path: '/LandingPage',
-      name: 'LandingPage',
-      component: LandingPage
+      path: '/',
+      redirect: '/logIn'
     },
     {
+
       path: '/LogIn',
       name: 'LogIn',
       // route level code-splitting

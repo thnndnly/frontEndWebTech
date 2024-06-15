@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
 import LogIn from "@/views/LogIn.vue";
 </script>
 
@@ -9,10 +8,9 @@ import LogIn from "@/views/LogIn.vue";
     <img alt="Vue logo" class="logo" src="@/assets/PokerLogo2.png" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+
 
       <nav>
-        <RouterLink to="/LandingPage">Home</RouterLink>
         <RouterLink to="/LogIn">LogIn</RouterLink>
         <RouterLink to="/Tabelle">Tabelle</RouterLink>
         <RouterLink to="/Analyse">Analyse</RouterLink>
@@ -30,9 +28,12 @@ header {
   max-height: 100vh;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.logo-and-title {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 nav {
