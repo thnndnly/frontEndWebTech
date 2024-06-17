@@ -3,43 +3,50 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const loginData = reactive({
+const registerData = reactive({
+  name: '',
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 });
 </script>
 
 <template>
-  <div class="login-card">
+  <div class="register-card">
     <div class="card-body">
       <div class="logo-container">
         <img alt="Vue logo" class="logo" src="@/assets/PokerLogo2.png" width="80" height="80" />
       </div>
       <div class="input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" v-model="registerData.name" required>
+      </div>
+      <div class="input-group">
         <label for="email">Email</label>
-        <input type="email" id="email" v-model="loginData.email" required>
+        <input type="email" id="email" v-model="registerData.email" required>
       </div>
       <div class="input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="loginData.password" required>
+        <input type="password" id="password" v-model="registerData.password" required>
+      </div>
+      <div class="input-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" v-model="registerData.confirmPassword" required>
       </div>
       <div class="action-buttons">
-        <button type="submit">Log in</button>
+        <button type="submit">Register</button>
       </div>
       <hr>
       <div class="link-container">
-        <a href="#/newpassword">Can't remember password</a>
-      </div>
-      <div class="link-container">
-        <a href="#/signup">Sign up</a>
+        <a href="#/login">Already have an account? Log in</a>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.login-card {
-  background-color: #000000; /* Schwarzer Hintergrund */
+.register-card {
+  background-color: #000000; /* Tiefes Schwarz */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 20px;

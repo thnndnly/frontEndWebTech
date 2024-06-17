@@ -1,78 +1,77 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-
 const router = useRouter();
-
-const logout = () => {
-  localStorage.removeItem('UUID');
-  localStorage.removeItem('selectedJourney');
-  router.push('/login');
-};
-
-const toggleTheme = () => {
-  // Implementieren Sie Ihre Themenumschaltungsfunktionalität hier
-};
 </script>
 
 <template>
   <nav class="custom-navbar">
-    <div class="container">
-      <div class="logo-section">
-        <RouterLink to="/main">
-          <img src="@/assets/logo2.png" alt="Logo" style="height: 70px;">
-        </RouterLink>
-      </div>
-      <div class="nav-links">
-        <ul>
-          <li>
-            <RouterLink to="/user" title="User">Profile</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/newjourney" title="Create a new Journey">New Journey</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/main" title="Main">Main</RouterLink>
-          </li>
-          <li>
-            <a @click="logout" title="Logout" style="cursor: pointer;">Logout</a>
-          </li>
-          <li>
-            <i @click="toggleTheme">Toggle Theme</i>
-          </li>
-        </ul>
-      </div>
+    <div class="logo-section">
+      <RouterLink to="/main">
+        <img alt="Vue logo" class="logo" src="@/assets/PokerLogo2.png" width="80" height="80" />
+      </RouterLink>
+    </div>
+    <div class="nav-links">
+      <ul>
+        <li>
+          <RouterLink to="/LogIn" title="LogIn">LogIn</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/Tabelle" title="Tabelle">Tabelle</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/Analyse" title="Analyse">Analyse</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/Register" title="Register">Register</RouterLink>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
 
 <style scoped>
 .custom-navbar {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  margin: 15px;
+  background-color: black;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #f0f0f0;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed; /* Fixiert die Navbar am oberen Rand */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Stellt sicher, dass die Navbar über anderen Elementen bleibt */
 }
 
-.container {
+.logo-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.logo-section img {
-  height: 70px;
+.logo {
+  max-width: 100%;
+  height: auto;
 }
 
 .nav-links ul {
   display: flex;
-  list-style-type: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-links ul li {
-  padding: 10px;
-  cursor: pointer;
+  margin-left: 20px;
+}
+
+.nav-links ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-links ul li a:hover {
+  text-decoration: underline;
 }
 </style>
-
