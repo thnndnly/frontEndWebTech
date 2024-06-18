@@ -9,6 +9,7 @@ const registerData = reactive({
   password: '',
   confirmPassword: ''
 });
+
 </script>
 
 <template>
