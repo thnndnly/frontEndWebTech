@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PokerGameTable from "../components/icons/TabelleSeite/PokerGameTable.vue";
+import PokerGameTable from "@/components/TabelleSeite/PokerGameTable.vue";
 /*
 import NavBar from "../components/icons/NavigationsLeiste/NavBar.vue";
 

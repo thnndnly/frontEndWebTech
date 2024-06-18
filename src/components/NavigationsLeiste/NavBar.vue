@@ -7,7 +7,7 @@ const router = useRouter();
   <nav class="custom-navbar">
     <div class="logo-section">
       <RouterLink to="/main">
-        <img alt="Vue logo" class="logo" src="@/assets/PokerLogo2.png" width="80" height="80" />
+        <img alt="Vue logo" class="logo" src="../../assets/PokerLogo2.png" width="80" height="80" />
       </RouterLink>
     </div>
     <div class="nav-links">

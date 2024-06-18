@@ -1,54 +1,55 @@
 <script setup lang="ts">
-import { computed, reactive, ref, type UnwrapNestedRefs } from "vue";
-
-let entryID = 0;
+import {computed, onMounted, reactive, type Ref, ref, type UnwrapNestedRefs} from "vue";
+import axios, {type AxiosResponse} from "axios";
 
 const newEntry = {
-  id: 0,
   date: '',
-  type: '',
+  gametype: '',
   sb: 0,
   bb: 0,
-  buyin: 0,
-  cashout: 0
+  buyIn: 0,
+  cashOut: 0,
+  owner: getOwner()
 };
 
-entryID++;
-let pokerEntryData = reactive({
-  pokerGameEntry: [
-    { id: entryID++, date: '2021-10-01', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 150 },
-    { id: entryID++, date: '2021-10-02', type: 'PLO', sb: 0.5, bb: 1, buyin: 200, cashout: 250 },
-    { id: entryID++, date: '2021-10-03', type: 'NLHE', sb: 0.5, bb: 1, buyin: 150, cashout: 100 },
-    { id: entryID++, date: '2021-10-04', type: 'NLHE', sb: 0.5, bb: 1, buyin: 100, cashout: 200 },
-    { id: entryID++, date: '2021-10-05', type: 'PLO', sb: 0.5, bb: 1, buyin: 300, cashout: 0 },
-  ]
-});
-
-function addPokerEntry() {
-  pokerEntryData.pokerGameEntry.push({ id: newEntry.id, date: newEntry.date, type: newEntry.type, sb: newEntry.sb, bb: newEntry.bb, buyin: newEntry.buyin, cashout: newEntry.cashout });
+function getOwner(){
+  return 'derG'
 }
 
-function deleteEntry(entryToDelete: UnwrapNestedRefs<{
-  date: string;
-  bb: number;
-  buyin: number;
-  id: number;
-  type: string;
-  sb: number;
-  cashout: number
-}>) {
-  pokerEntryData.pokerGameEntry = pokerEntryData.pokerGameEntry.filter((e) => e.id !== entryToDelete.id);
+const pokerEntryData : Ref<gameEntry[]> = ref([])
+
+function deleteEntry(id: number){
+  return null
+}
+
+async function fetchGameEntries(owner: string) {
+  const url = 'https://allerjutsteswebtechprojekt.onrender.com/pokerGameEntries'
+  const endpoint = url + '?owner=' + owner
+  console.log('fetch url', endpoint)
+  const response: AxiosResponse = await axios.get(endpoint)
+  const responseData: gameEntry[] = response.data
+  responseData.forEach((entry: gameEntry) => {
+    pokerEntryData.value.push(entry)
+  })
+}
+
+// Chat magic
+async function sendGameEntry() {
+  const url = 'https://allerjutsteswebtechprojekt.onrender.com/pokerGameEntries';
+
+  const response: AxiosResponse = await axios.post(url, newEntry)
+  const responseData: gameEntry = response.data
+  console.log('Success:', responseData)
 }
 
 function addNewEntry() {
-  addPokerEntry();
-  newEntry.id = entryID++;
+  sendGameEntry();
   newEntry.date = '';
-  newEntry.type = '';
+  newEntry.gametype = '';
   newEntry.sb = 0;
   newEntry.bb = 0;
-  newEntry.buyin = 0;
-  newEntry.cashout = 0;
+  newEntry.buyIn = 0;
+  newEntry.cashOut = 0;
 }
 
 const columnWidths = {
@@ -59,6 +60,11 @@ const columnWidths = {
   buyin: '80px', // Beispielbreite für Spalte Buy-In
   cashout: '80px' // Beispielbreite für Spalte Cash-Out
 };
+
+onMounted(async()=> {
+  await fetchGameEntries('derG')
+})
+
 </script>
 
 <template>
@@ -78,29 +84,29 @@ const columnWidths = {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="entry in pokerEntryData.pokerGameEntry" :key="entry.id" class="data-row">
+      <tr v-for="entry in pokerEntryData" :key="entry.id" class="data-row">
         <td>{{ entry.date }}</td>
-        <td>{{ entry.type }}</td>
+        <td>{{ entry.gametype }}</td>
         <td>{{ entry.sb }}</td>
         <td>{{ entry.bb }}</td>
-        <td>{{ entry.buyin }}</td>
-        <td>{{ entry.cashout }}</td>
-        <td :class="(entry.cashout - entry.buyin) < 0 ? 'valueNegative' : 'valuePositive'">
-          {{ entry.cashout - entry.buyin }}
+        <td>{{ entry.buyIn }}</td>
+        <td>{{ entry.cashOut }}</td>
+        <td :class="(entry.cashOut - entry.buyIn) < 0 ? 'valueNegative' : 'valuePositive'">
+          {{ entry.cashOut - entry.buyIn }}
         </td>
         <td>
-          <button @click="deleteEntry(entry)" class="deleteButton">
-            <img alt="Delete Row Icon" class="logo" src="../../../assets/IconDeleteWhite.png"/>
+          <button @click="deleteEntry(entry.id)" class="deleteButton">
+            <img alt="Delete Row Icon" class="logo" src="../../assets/IconDeleteWhite.png"/>
           </button>
         </td>
       </tr>
       <tr class="input-row">
         <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }" placeholder="Datum"></td>
-        <td><input type="text" id="type" v-model="newEntry.type" :style="{ width: columnWidths.type }" placeholder="Spieltyp"></td>
+        <td><input type="text" id="type" v-model="newEntry.gametype" :style="{ width: columnWidths.type }" placeholder="Spieltyp"></td>
         <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }" placeholder="SB"></td>
         <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }" placeholder="BB"></td>
-        <td><input type="text" id="buyin" v-model="newEntry.buyin" :style="{ width: columnWidths.buyin }" placeholder="Buy-In"></td>
-        <td><input type="text" id="cashout" v-model="newEntry.cashout" :style="{ width: columnWidths.cashout }" placeholder="Cash-Out"></td>
+        <td><input type="text" id="buyin" v-model="newEntry.buyIn" :style="{ width: columnWidths.buyin }" placeholder="Buy-In"></td>
+        <td><input type="text" id="cashout" v-model="newEntry.cashOut" :style="{ width: columnWidths.cashout }" placeholder="Cash-Out"></td>
         <td><button @click="addNewEntry()" id="addEntryButton">Add Entry</button></td>
       </tr>
       </tbody>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Analyse from "../components/icons/AnalyseSeite/Analysee.vue"; // Sicherstellen, dass der Pfad korrekt ist
+import Analyse from "@/components/AnalyseSeite/Analysee.vue"; // Sicherstellen, dass der Pfad korrekt ist
 </script>
 
 <template>

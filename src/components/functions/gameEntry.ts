@@ -1,9 +1,10 @@
 interface gameEntry {
     date: string;
     bb: number;
-    buyin: number;
+    buyIn: number;
     id: number;
-    type: string;
+    gametype: string;
     sb: number;
-    cashout: number
+    cashOut: number
+    ante: number;
 }
