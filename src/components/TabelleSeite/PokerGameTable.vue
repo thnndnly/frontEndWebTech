@@ -18,8 +18,15 @@ function getOwner(){
 
 const pokerEntryData : Ref<gameEntry[]> = ref([])
 
-function deleteEntry(id: number){
-  return null
+async function deleteEntry(id: number){
+  const url = 'https://allerjutsteswebtechprojekt.onrender.com/pokerGameEntries'
+  const endpoint = url + '/' + id
+  console.log('delete url', endpoint)
+
+  const response: AxiosResponse = await axios.delete(endpoint)
+  const responseData: gameEntry[] = response.data
+  console.log('Success:', responseData)
+  await fetchGameEntries('derG')
 }
 
 async function fetchGameEntries(owner: string) {
@@ -28,18 +35,18 @@ async function fetchGameEntries(owner: string) {
   console.log('fetch url', endpoint)
   const response: AxiosResponse = await axios.get(endpoint)
   const responseData: gameEntry[] = response.data
+  pokerEntryData.value = []
   responseData.forEach((entry: gameEntry) => {
     pokerEntryData.value.push(entry)
   })
 }
 
-// Chat magic
 async function sendGameEntry() {
   const url = 'https://allerjutsteswebtechprojekt.onrender.com/pokerGameEntries';
-
   const response: AxiosResponse = await axios.post(url, newEntry)
   const responseData: gameEntry = response.data
   console.log('Success:', responseData)
+  await fetchGameEntries(getOwner())
 }
 
 function addNewEntry() {
@@ -62,7 +69,7 @@ const columnWidths = {
 };
 
 onMounted(async()=> {
-  await fetchGameEntries('derG')
+  await fetchGameEntries(getOwner())
 })
 
 </script>
@@ -80,7 +87,6 @@ onMounted(async()=> {
         <th>Buy-In</th>
         <th>Cash-Out</th>
         <th>Win/Loss</th>
-        <th>Aktion</th>
       </tr>
       </thead>
       <tbody>
@@ -94,7 +100,7 @@ onMounted(async()=> {
         <td :class="(entry.cashOut - entry.buyIn) < 0 ? 'valueNegative' : 'valuePositive'">
           {{ entry.cashOut - entry.buyIn }}
         </td>
-        <td>
+        <td id="deleteButtonTD">
           <button @click="deleteEntry(entry.id)" class="deleteButton">
             <img alt="Delete Row Icon" class="logo" src="../../assets/IconDeleteWhite.png"/>
           </button>
@@ -115,10 +121,11 @@ onMounted(async()=> {
 </template>
 
 <style scoped>
+
 .logo {
   width: 25px;
   height: 25px;
-  background: tomato;
+  background: red;
   border-radius: 15%;
 }
 
@@ -177,20 +184,23 @@ table {
   font-size: 1em;
   text-align: left;
   background-color: #2a2a2a;
-  color: white;
 }
 
 .pokerTable td {
   background-color: #1b1b1b;
-  color: white;
+}
+
+.pokerTable tr {
+  border-radius: 25px;
 }
 
 .header-row {
   background-color: #2a2a2a;
 }
 
-.data-row {
-  background-color: #1b1b1b;
+#deleteButtonTD {
+  background-color: rgba(0, 0, 0, 0.0);
+  border: none;
 }
 
 .input-row {
@@ -203,4 +213,9 @@ h1 {
   text-align: left;
   color: #c40000;
 }
+
+.deleteButtonTD {
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
 </style>

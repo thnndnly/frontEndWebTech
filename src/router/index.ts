@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Abgabe2View from "@/views/Tabelle.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +22,11 @@ const router = createRouter({
       name: 'Tabelle',
       component: () => import('../views/Tabelle.vue')
     },
+    {
+      path: '/Tabelle2',
+      name: 'Tabelle2',
+        component: () => import('../views/Tabelle2.vue')
+    }  ,
     {
       path: '/Analyse',
       name: 'Analyse',

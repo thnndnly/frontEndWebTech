@@ -19,6 +19,9 @@ const router = useRouter();
           <RouterLink to="/Tabelle" title="Tabelle">Tabelle</RouterLink>
         </li>
         <li>
+          <RouterLink to="/Tabelle2" title="Tabelle2">Tabelle2</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/Analyse" title="Analyse">Analyse</RouterLink>
         </li>
         <li>
