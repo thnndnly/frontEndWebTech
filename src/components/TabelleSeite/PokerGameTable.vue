@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {computed, onMounted, reactive, type Ref, ref, type UnwrapNestedRefs} from "vue";
-import axios, {type AxiosResponse} from "axios";
+import { computed, onMounted, reactive, type Ref, ref, type UnwrapNestedRefs } from "vue";
+import axios, { type AxiosResponse } from "axios";
 
 const newEntry = {
   date: '',
@@ -12,13 +12,13 @@ const newEntry = {
   owner: getOwner()
 };
 
-function getOwner(){
+function getOwner() {
   return 'derG'
 }
 
-const pokerEntryData : Ref<gameEntry[]> = ref([])
+const pokerEntryData: Ref<gameEntry[]> = ref([])
 
-async function deleteEntry(id: number){
+async function deleteEntry(id: number) {
   const url = 'https://allerjutsteswebtechprojekt.onrender.com/pokerGameEntries'
   const endpoint = url + '/' + id
   console.log('delete url', endpoint)
@@ -68,64 +68,72 @@ const columnWidths = {
   cashout: '80px' // Beispielbreite für Spalte Cash-Out
 };
 
-onMounted(async()=> {
+onMounted(async () => {
   await fetchGameEntries(getOwner())
 })
 
 </script>
 
 <template>
-  <div id="pokerTable">
-    <h1 id="tableHeader">Poker History</h1>
-    <table class="pokerTable">
-      <thead>
-      <tr class="header-row">
-        <th>Datum</th>
-        <th>Spieltyp</th>
-        <th>Small Blind</th>
-        <th>Big Blind</th>
-        <th>Buy-In</th>
-        <th>Cash-Out</th>
-        <th>Win/Loss</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="entry in pokerEntryData" :key="entry.id" class="data-row">
-        <td>{{ entry.date }}</td>
-        <td>{{ entry.gametype }}</td>
-        <td>{{ entry.sb }}</td>
-        <td>{{ entry.bb }}</td>
-        <td>{{ entry.buyIn }}</td>
-        <td>{{ entry.cashOut }}</td>
-        <td :class="(entry.cashOut - entry.buyIn) < 0 ? 'valueNegative' : 'valuePositive'">
-          {{ entry.cashOut - entry.buyIn }}
-        </td>
-        <td id="deleteButtonTD">
-          <button @click="deleteEntry(entry.id)" class="deleteButton">
-            <img alt="Delete Row Icon" class="logo" src="../../assets/IconDeleteWhite.png"/>
-          </button>
-        </td>
-      </tr>
-      <tr class="input-row">
-        <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }" placeholder="Datum"></td>
-        <td><input type="text" id="type" v-model="newEntry.gametype" :style="{ width: columnWidths.type }" placeholder="Spieltyp"></td>
-        <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }" placeholder="SB"></td>
-        <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }" placeholder="BB"></td>
-        <td><input type="text" id="buyin" v-model="newEntry.buyIn" :style="{ width: columnWidths.buyin }" placeholder="Buy-In"></td>
-        <td><input type="text" id="cashout" v-model="newEntry.cashOut" :style="{ width: columnWidths.cashout }" placeholder="Cash-Out"></td>
-        <td><button @click="addNewEntry()" id="addEntryButton">Add Entry</button></td>
-      </tr>
-      </tbody>
-    </table>
+  <div id="pokerTableWrapper">
+    <div id="pokerTable">
+      <h1 id="tableHeader">Poker History</h1>
+      <table class="pokerTable">
+        <thead>
+        <tr class="header-row">
+          <th>Datum</th>
+          <th>Spieltyp</th>
+          <th>Small Blind</th>
+          <th>Big Blind</th>
+          <th>Buy-In</th>
+          <th>Cash-Out</th>
+          <th>Win/Loss</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="entry in pokerEntryData" :key="entry.id" class="data-row">
+          <td>{{ entry.date }}</td>
+          <td>{{ entry.gametype }}</td>
+          <td>{{ entry.sb }}</td>
+          <td>{{ entry.bb }}</td>
+          <td>{{ entry.buyIn }}</td>
+          <td>{{ entry.cashOut }}</td>
+          <td :class="(entry.cashOut - entry.buyIn) < 0 ? 'valueNegative' : 'valuePositive'">
+            {{ entry.cashOut - entry.buyIn }}
+          </td>
+          <td id="deleteButtonTD">
+            <button @click="deleteEntry(entry.id)" class="deleteButton">
+              <img alt="Delete Row Icon" class="logo" src="../../assets/IconDeleteWhite.png" />
+            </button>
+          </td>
+        </tr>
+        <tr class="input-row">
+          <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }" placeholder="Datum"></td>
+          <td><input type="text" id="type" v-model="newEntry.gametype" :style="{ width: columnWidths.type }" placeholder="Spieltyp"></td>
+          <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }" placeholder="SB"></td>
+          <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }" placeholder="BB"></td>
+          <td><input type="text" id="buyin" v-model="newEntry.buyIn" :style="{ width: columnWidths.buyin }" placeholder="Buy-In"></td>
+          <td><input type="text" id="cashout" v-model="newEntry.cashOut" :style="{ width: columnWidths.cashout }" placeholder="Cash-Out"></td>
+          <td><button @click="addNewEntry()" id="addEntryButton">Add Entry</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <style scoped>
 
+#pokerTableWrapper {
+  background-color: black;
+  padding: 50px 15px 70px 50px; /* Vergrößert den Rand unten und rechts, rechts um weitere 1.5 cm weniger */
+  border-radius: 10px;
+}
+
 .logo {
   width: 25px;
   height: 25px;
-  background: red;
+  background: darkred;
   border-radius: 15%;
 }
 
@@ -211,7 +219,7 @@ h1 {
   font-weight: bold;
   font-size: 2em;
   text-align: left;
-  color: #c40000;
+  color: darkred;
 }
 
 .deleteButtonTD {
