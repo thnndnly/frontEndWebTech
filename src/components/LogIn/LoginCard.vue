@@ -5,7 +5,7 @@ import axios from "axios";
 
 const router = useRouter();
 const loginData = reactive({
-  nutzername: '',
+  username: '',
   password: '',
 });
 
@@ -54,7 +54,7 @@ async function tryLogin() {
       </div>
       <div class="input-group">
         <label for="email">Nutzername</label>
-        <input type="email" id="email" v-model="loginData.nutzername" required>
+        <input type="email" id="email" v-model="loginData.username" required>
       </div>
       <div class="input-group">
         <label for="password">Password</label>
