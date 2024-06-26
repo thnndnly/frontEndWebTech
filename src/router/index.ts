@@ -20,7 +20,8 @@ const router = createRouter({
     {
       path: '/Tabelle',
       name: 'Tabelle',
-      component: () => import('../views/Tabelle.vue')
+      component: () => import('../views/Tabelle.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/Tabelle2',
@@ -30,7 +31,8 @@ const router = createRouter({
     {
       path: '/Analyse',
       name: 'Analyse',
-      component: () => import('../views/Analyse.vue')
+      component: () => import('../views/Analyse.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/Register',
@@ -38,6 +40,18 @@ const router = createRouter({
       component: () => import('../views/Register.vue')
     },
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('nutzername')
+
+  // https://sentry.io/answers/how-do-i-check-for-an-empty-undefined-null-string-in-javascript/
+  if(isAuthenticated) {
+    next('/LogIn')
+  }
+  else {
+    next()
+  }
 })
 
 export default router

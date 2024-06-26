@@ -10,13 +10,17 @@ const registerData = reactive({
   confirmPassword: ''
 });
 
+function linkLogin() {
+  router.push('/login');
+}
+
 </script>
 
 <template>
   <div class="register-card">
     <div class="card-body">
       <div class="logo-container">
-        <img alt="Vue logo" class="logo" src="../../assets/PokerLogo2.png" width="80" height="80" />
+        <img alt="Cardcombat Poker logo" class="logo" src="../../assets/PokerLogo2.png" width="80" height="80" />
       </div>
       <div class="input-group">
         <label for="name">Name</label>
@@ -39,7 +43,7 @@ const registerData = reactive({
       </div>
       <hr>
       <div class="link-container">
-        <a href="#/login">Already have an account? Log in</a>
+        <a @click="linkLogin()">Already have an account? Log in</a>
       </div>
     </div>
   </div>
