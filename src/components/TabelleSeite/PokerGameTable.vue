@@ -1,5 +1,60 @@
+<template>
+  <div id="pokerTableWrapper">
+    <div id="pokerTable">
+      <h1 id="tableHeader">Poker History</h1>
+      <table class="pokerTable">
+        <thead>
+        <tr class="header-row">
+          <th>Datum</th>
+          <th>Spieltyp</th>
+          <th>Small Blind</th>
+          <th>Big Blind</th>
+          <th>Buy-In</th>
+          <th>Cash-Out</th>
+          <th>Win/Loss</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="entry in pokerEntryData" :key="entry.id" class="data-row">
+          <td>{{ entry.date }}</td>
+          <td>{{ entry.gametype }}</td>
+          <td>{{ entry.sb }}</td>
+          <td>{{ entry.bb }}</td>
+          <td>{{ entry.buyIn }}</td>
+          <td>{{ entry.cashOut }}</td>
+          <td :class="(entry.cashOut - entry.buyIn) < 0 ? 'valueNegative' : 'valuePositive'">
+            {{ entry.cashOut - entry.buyIn }}
+          </td>
+          <td id="deleteButtonTD">
+            <button @click="deleteEntry(entry.id)" class="deleteButton">
+              <img alt="Delete Row Icon" class="logo" src="../../assets/IconDeleteWhite.png" />
+            </button>
+          </td>
+        </tr>
+        <tr class="input-row">
+          <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }" placeholder="Datum"></td>
+          <td>
+            <select id="type" v-model="newEntry.gametype" :style="{ width: columnWidths.type }" class="styled-select">
+              <option value="">Select Spieltyp</option>
+              <option value="CASHGAME">CASHGAME</option>
+              <option value="TOURNAMENT">TOURNAMENT</option>
+              <option value="SPINANDGO">SPIN & GO</option>
+            </select>
+          </td>
+          <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }" placeholder="SB"></td>
+          <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }" placeholder="BB"></td>
+          <td><input type="text" id="buyin" v-model="newEntry.buyIn" :style="{ width: columnWidths.buyin }" placeholder="Buy-In"></td>
+          <td><input type="text" id="cashout" v-model="newEntry.cashOut" :style="{ width: columnWidths.cashout }" placeholder="Cash-Out"></td>
+          <td><button @click="addNewEntry()" id="addEntryButton">Add Entry</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { computed, onMounted, reactive, type Ref, ref, type UnwrapNestedRefs } from "vue";
+import { onMounted, ref, type Ref } from 'vue';
 import axios, { type AxiosResponse } from "axios";
 
 const newEntry = {
@@ -61,7 +116,7 @@ function addNewEntry() {
 
 const columnWidths = {
   date: '100px', // Beispielbreite für Datumsspalte
-  type: '80px', // Beispielbreite für Spalte Spieltyp
+  type: '130px', // Beispielbreite für Spalte Spieltyp
   sb: '100px', // Beispielbreite für Spalte Small Blind
   bb: '100px', // Beispielbreite für Spalte Big Blind
   buyin: '80px', // Beispielbreite für Spalte Buy-In
@@ -71,59 +126,9 @@ const columnWidths = {
 onMounted(async () => {
   await fetchGameEntries(getOwner())
 })
-
 </script>
 
-<template>
-  <div id="pokerTableWrapper">
-    <div id="pokerTable">
-      <h1 id="tableHeader">Poker History</h1>
-      <table class="pokerTable">
-        <thead>
-        <tr class="header-row">
-          <th>Datum</th>
-          <th>Spieltyp</th>
-          <th>Small Blind</th>
-          <th>Big Blind</th>
-          <th>Buy-In</th>
-          <th>Cash-Out</th>
-          <th>Win/Loss</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="entry in pokerEntryData" :key="entry.id" class="data-row">
-          <td>{{ entry.date }}</td>
-          <td>{{ entry.gametype }}</td>
-          <td>{{ entry.sb }}</td>
-          <td>{{ entry.bb }}</td>
-          <td>{{ entry.buyIn }}</td>
-          <td>{{ entry.cashOut }}</td>
-          <td :class="(entry.cashOut - entry.buyIn) < 0 ? 'valueNegative' : 'valuePositive'">
-            {{ entry.cashOut - entry.buyIn }}
-          </td>
-          <td id="deleteButtonTD">
-            <button @click="deleteEntry(entry.id)" class="deleteButton">
-              <img alt="Delete Row Icon" class="logo" src="../../assets/IconDeleteWhite.png" />
-            </button>
-          </td>
-        </tr>
-        <tr class="input-row">
-          <td><input type="text" id="date" v-model="newEntry.date" :style="{ width: columnWidths.date }" placeholder="Datum"></td>
-          <td><input type="text" id="type" v-model="newEntry.gametype" :style="{ width: columnWidths.type }" placeholder="Spieltyp"></td>
-          <td><input type="text" id="sb" v-model="newEntry.sb" :style="{ width: columnWidths.sb }" placeholder="SB"></td>
-          <td><input type="text" id="bb" v-model="newEntry.bb" :style="{ width: columnWidths.bb }" placeholder="BB"></td>
-          <td><input type="text" id="buyin" v-model="newEntry.buyIn" :style="{ width: columnWidths.buyin }" placeholder="Buy-In"></td>
-          <td><input type="text" id="cashout" v-model="newEntry.cashOut" :style="{ width: columnWidths.cashout }" placeholder="Cash-Out"></td>
-          <td><button @click="addNewEntry()" id="addEntryButton">Add Entry</button></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</template>
-
 <style scoped>
-
 #pokerTableWrapper {
   background-color: black;
   padding: 50px 15px 70px 50px; /* Vergrößert den Rand unten und rechts, rechts um weitere 1.5 cm weniger */
@@ -226,4 +231,18 @@ h1 {
   background-color: rgba(0, 0, 0, 0.0);
 }
 
+.styled-select {
+  border: 2px solid #007bff;
+  border-radius: 2px;
+  background-color: #181818;
+  outline: none;
+  color: rgba(235, 235, 235, 0.64);
+  padding: 5px;
+  appearance: none; /* Entfernt den Standard-Pfeil bei Dropdowns */
+  -moz-appearance: none; /* Entfernt den Standard-Pfeil bei Firefox */
+  -webkit-appearance: none; /* Entfernt den Standard-Pfeil bei Webkit-Browsern */
+  background-image: url('../../assets/dropdown-arrow.png'); /* Pfad zum benutzerdefinierten Dropdown-Pfeil */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Positionierung des benutzerdefinierten Dropdown-Pfeils */
+}
 </style>

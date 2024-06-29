@@ -23,11 +23,7 @@ const router = createRouter({
       component: () => import('../views/Tabelle.vue'),
       meta: { requiresAuth: true }
     },
-    {
-      path: '/Tabelle2',
-      name: 'Tabelle2',
-        component: () => import('../views/Tabelle2.vue')
-    }  ,
+
     {
       path: '/Analyse',
       name: 'Analyse',
