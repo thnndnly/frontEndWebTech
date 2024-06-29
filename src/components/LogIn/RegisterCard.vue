@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import {reactive, ref} from 'vue';
 import { useRouter } from 'vue-router';
+import axios from "axios";
 
 const router = useRouter();
 const registerData = reactive({
@@ -9,11 +10,49 @@ const registerData = reactive({
   confirmPassword: ''
 });
 
+const registerError = ref(false);
+const registerSuccess = ref(false);
+const registerErrorText = ref('');
+
 function linkLogin() {
   router.push('/login');
 }
 
+async function register() {
+  if(registerData.password !== registerData.confirmPassword){
+    console.log('Passwords do not match');
+    registerError.value = true;
+    registerErrorText.value = 'Passwords do not match';
+    return;
+  }
+  if(await tryRegister()) {
+    setTimeout(async () => {
+      await router.push('/login');
+    }, 2000);
+  }
+  else {
+    console.log('Registration failed');
+  }
+}
 
+async function tryRegister() {
+  const url = 'https://allerjutsteswebtechprojekt.onrender.com/register';
+  try {
+    const response = await axios.post(url, registerData);
+    if(response.status === 200) {
+      console.log('Registration successful');
+      registerError.value = false;
+      registerSuccess.value = true;
+      return true;
+    }
+  } catch (error) {
+    console.log('Registration failed');
+    registerSuccess.value = false;
+    registerError.value = true;
+    registerErrorText.value = 'Something went wrong. Please try again.'
+    return false;
+  }
+}
 
 </script>
 
@@ -35,8 +74,14 @@ function linkLogin() {
         <label for="confirm-password">Confirm Password</label>
         <input type="password" id="confirm-password" v-model="registerData.confirmPassword" required>
       </div>
+      <div v-if="registerError" style="color: red; margin-bottom: 10px;">
+        {{ registerErrorText }}
+      </div>
+      <div v-if="registerSuccess" style="color: green; margin-bottom: 10px;">
+        Registration successful. Redirecting to login page...
+      </div>
       <div class="action-buttons">
-        <button type="submit">Register</button>
+        <button @click="register()" type="submit">Register</button>
       </div>
       <hr>
       <div class="link-container">
