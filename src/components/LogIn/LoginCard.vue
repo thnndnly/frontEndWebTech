@@ -9,7 +9,8 @@ const loginData = reactive({
   password: '',
 });
 
-let loginError: Ref<boolean> = ref(false);
+const loginError = ref(false);
+const loginSuccess = ref(false);
 
 function linkSignup() {
   router.push('/register');
@@ -17,7 +18,9 @@ function linkSignup() {
 
 async function login() {
   if(await tryLogin()) {
-    await router.push('/Tabelle');
+    setTimeout(async () => {
+      await router.push('/Tabelle');
+    }, 2000);
   }
   else {
     console.log('Login failed');
@@ -26,16 +29,19 @@ async function login() {
 
 async function tryLogin() {
   const url = 'https://allerjutsteswebtechprojekt.onrender.com/login';
-  const response = await axios.post(url, loginData);
-  if(response.status === 200) {
-    localStorage.setItem('username', response.data);
-    console.log('Login successful');
-    loginError.value = false;
-    return true;
-  }
-  else {
+  try {
+    const response = await axios.post(url, loginData);
+    if(response.status === 200) {
+      localStorage.setItem('username', response.data);
+      console.log('Login successful');
+      loginError.value = false;
+      loginSuccess.value = true;
+      return true;
+    }
+  } catch (error) {
     localStorage.setItem('username', '')
     console.log('Login failed');
+    loginSuccess.value = false;
     loginError.value = true;
     return false;
   }
@@ -59,6 +65,9 @@ async function tryLogin() {
       </div>
       <div v-if="loginError" class="error-message">
         Login fehlgeschlagen. Bitte versuchen Sie es erneut.
+      </div>
+      <div v-if="loginSuccess" class="success-message">
+        Login erfolgreich. Weiter so!
       </div>
       <div class="action-buttons">
         <button type="submit" @click="login()">Log in</button>
@@ -138,4 +147,15 @@ input::placeholder {
 .link-container a:hover {
   text-decoration: underline;
 }
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  color: green;
+  margin-bottom: 10px;
+}
+
 </style>

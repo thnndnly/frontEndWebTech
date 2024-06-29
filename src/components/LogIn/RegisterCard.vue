@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const registerData = reactive({
   name: '',
-  email: '',
   password: '',
   confirmPassword: ''
 });
@@ -13,6 +12,8 @@ const registerData = reactive({
 function linkLogin() {
   router.push('/login');
 }
+
+
 
 </script>
 
@@ -25,10 +26,6 @@ function linkLogin() {
       <div class="input-group">
         <label for="name">Name</label>
         <input type="text" id="name" v-model="registerData.name" required>
-      </div>
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="registerData.email" required>
       </div>
       <div class="input-group">
         <label for="password">Password</label>
