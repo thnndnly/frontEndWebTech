@@ -13,7 +13,7 @@ const newEntry = {
 };
 
 function getOwner() {
-  return 'derG'
+  return localStorage.getItem('username') || "";
 }
 
 const pokerEntryData: Ref<gameEntry[]> = ref([])
@@ -26,7 +26,7 @@ async function deleteEntry(id: number) {
   const response: AxiosResponse = await axios.delete(endpoint)
   const responseData: gameEntry[] = response.data
   console.log('Success:', responseData)
-  await fetchGameEntries('derG')
+  await fetchGameEntries(getOwner())
 }
 
 async function fetchGameEntries(owner: string) {

@@ -9,8 +9,7 @@ const loginData = reactive({
   password: '',
 });
 
-const loginError: Ref<boolean[]> = ref([]);
-loginError.value.push(false);
+let loginError: Ref<boolean> = ref(false);
 
 function linkSignup() {
   router.push('/register');
@@ -29,17 +28,15 @@ async function tryLogin() {
   const url = 'https://allerjutsteswebtechprojekt.onrender.com/login';
   const response = await axios.post(url, loginData);
   if(response.status === 200) {
-    localStorage.setItem('nutzername', response.data.token);
+    localStorage.setItem('username', response.data);
     console.log('Login successful');
-    loginError.value.pop()
-    loginError.value.push(false)
+    loginError.value = false;
     return true;
   }
   else {
-    localStorage.setItem('nutzername', '')
+    localStorage.setItem('username', '')
     console.log('Login failed');
-    loginError.value.pop()
-    loginError.value.push(true)
+    loginError.value = true;
     return false;
   }
 }
@@ -53,14 +50,14 @@ async function tryLogin() {
         <img alt="Vue logo" class="logo" src="../../assets/PokerLogo2.png" width="80" height="80" />
       </div>
       <div class="input-group">
-        <label for="email">Nutzername</label>
+        <label for="email">Username</label>
         <input type="email" id="email" v-model="loginData.username" required>
       </div>
       <div class="input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="loginData.password" required>
       </div>
-      <div v-if="!loginError" class="error-message">
+      <div v-if="loginError" class="error-message">
         Login fehlgeschlagen. Bitte versuchen Sie es erneut.
       </div>
       <div class="action-buttons">

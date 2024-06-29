@@ -43,9 +43,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('nutzername')
+  const isAuthenticated = !!localStorage.getItem('username')
 
-  // https://sentry.io/answers/how-do-i-check-for-an-empty-undefined-null-string-in-javascript/
   if(to.meta.requiresAuth && !isAuthenticated) {
     next('/LogIn')
   }
