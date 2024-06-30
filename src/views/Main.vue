@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import router from "@/router";
 </script>
 
 <template>
@@ -26,7 +27,7 @@
     <section class="cta">
       <h2>Get Started</h2>
       <p>Join CardCombatPoker today and take control of your poker journey.</p>
-      <button>Sign Up Now</button>
+      <button @click="router.push('/register')">Sign Up Now</button>
     </section>
   </main>
 </template>
