@@ -6,7 +6,7 @@ const router = createRouter({
 
     {
       path: '/',
-      redirect: '/logIn'
+      redirect: '/main',
     },
     {
 
@@ -35,6 +35,11 @@ const router = createRouter({
       name: 'Register',
       component: () => import('../views/Register.vue')
     },
+    {
+      path: '/main',
+      name: 'Main',
+      component: () => import('../views/Main.vue'),
+    }
   ]
 })
 
