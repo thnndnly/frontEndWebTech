@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import {ref, onMounted, type Ref} from "vue";
 const router = useRouter();
 
 // Verwende ref für loggedIn, um reactive zu sein
-const loggedIn = ref(!!localStorage.getItem('username'));
+const loggedIn: Ref<boolean> = ref(!!localStorage.getItem('username'));
 
 onMounted(() => {
-  // Bei der Montage prüfen, ob ein Benutzer angemeldet ist
   loggedIn.value = !!localStorage.getItem('username');
 });
 </script>
