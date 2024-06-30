@@ -1,38 +1,28 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import {ref, onMounted, type Ref} from "vue";
 const router = useRouter();
-
-// Verwende ref für loggedIn, um reactive zu sein
-const loggedIn: Ref<boolean> = ref(!!localStorage.getItem('username'));
-
-onMounted(() => {
-  loggedIn.value = !!localStorage.getItem('username');
-});
 </script>
 
 <template>
   <nav class="custom-navbar">
     <div class="logo-section">
-      <router-link to="/main">
+      <RouterLink to="/main">
         <img alt="Vue logo" class="logo" src="../../assets/PokerLogo2.png" width="80" height="80" />
-      </router-link>
+      </RouterLink>
     </div>
     <div class="nav-links">
       <ul>
-        <!-- Zeige LogIn und Register nur an, wenn loggedIn false ist -->
-        <li v-if="!loggedIn">
-          <router-link to="/LogIn" title="LogIn">LogIn</router-link>
+        <li>
+          <RouterLink to="/LogIn" title="LogIn">LogIn</RouterLink>
         </li>
-        <li v-if="!loggedIn">
-          <router-link to="/Register" title="Register">Register</router-link>
+        <li>
+          <RouterLink to="/Tabelle" title="Tabelle">Tabelle</RouterLink>
         </li>
-        <!-- Zeige Tabelle und Analyse nur an, wenn loggedIn true ist -->
-        <li v-if="loggedIn">
-          <router-link to="/Tabelle" title="Tabelle">Tabelle</router-link>
+        <li>
+          <RouterLink to="/Analyse" title="Analyse">Analyse</RouterLink>
         </li>
-        <li v-if="loggedIn">
-          <router-link to="/Analyse" title="Analyse">Analyse</router-link>
+        <li>
+          <RouterLink to="/Register" title="Register">Register</RouterLink>
         </li>
       </ul>
     </div>
