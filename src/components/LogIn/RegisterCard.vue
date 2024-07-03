@@ -38,7 +38,11 @@ async function register() {
 async function tryRegister() {
   const url = 'https://allerjutsteswebtechprojekt.onrender.com/register';
   try {
-    const response = await axios.post(url, registerData);
+    const user = {
+      name: registerData.name,
+      password: registerData.password
+    }
+    const response = await axios.post(url, user);
     if(response.status === 200) {
       console.log('Registration successful');
       registerError.value = false;
